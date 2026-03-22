@@ -12,10 +12,10 @@ module PostgresDocs
         build_header,
         build_mermaid_diagram,
         build_toc,
-        build_table_datails
+        build_table_details
       ]
 
-      "#{document_block.join("\n\n")}\\n"
+      document_block.join("\n\n") + "\\n"
     end
 
     private
