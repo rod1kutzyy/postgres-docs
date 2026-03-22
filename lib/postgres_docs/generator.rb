@@ -25,12 +25,12 @@ module PostgresDocs
         # Documentation PostreSQL database
 
         > Generated automaticly by gem `postgres_docs`.
-        > Count of tables: **#{@schema.keys.size} **
+        > Count of tables: **#{@schema.keys.size}**
       MARKDOWN
     end
 
     def build_mermaid_diagram # rubocop:disable Metrics/AbcSize
-      lines = ["Scheme of database (ER-diagram)", "", "```mermaid", "erDiagram"]
+      lines = ["## Scheme of database (ER-diagram)", "", "```mermaid", "erDiagram"]
       @schema.each do |table_name, data|
         data[:foreign_keys].each do |fk|
           lines << "    #{fk[:foreign_table]} ||--o{ #{table_name} : \"#{fk[:column]}\""
