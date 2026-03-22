@@ -17,5 +17,16 @@ module PostgresDocs
 
       "#{document_block.join("\n\n")}\\n"
     end
+
+    private
+
+    def build_header
+      <<~MARKDOWN
+        # Documentation PostreSQL database
+
+        > Generated automaticly by gem `postgres_docs`.
+        > Count of tables: **#{@schema.keys.size} **
+      MARKDOWN
+    end
   end
 end
