@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "postgres_docs"
+
+known_commands = PostgresDocs::CLI.commands.keys
+
+ARGV.unshift("generate") if ARGV.any? && !known_commands.include?(ARGV[0]) && !ARGV[0].start_with?("-")
+
+PostgresDocs::CLI.start(ARGV)

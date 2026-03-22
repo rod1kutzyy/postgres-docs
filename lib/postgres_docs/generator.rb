@@ -15,7 +15,7 @@ module PostgresDocs
         build_table_details
       ]
 
-      document_block.join("\n\n") + "\\n"
+      document_block.join("\n\n") + "\n"
     end
 
     private
@@ -41,7 +41,7 @@ module PostgresDocs
           key_mark = col[:is_pk] ? " PK" : ""
           key_mark = " FK" if data[:foreign_keys].any? { |fk| fk[:column] == col[:name] }
 
-          safe_type = col[:type].gsub(/\s+/, "_")
+          safe_type = col[:type].split("(").first.strip.gsub(/\s+/, "_")
           lines << "        #{safe_type} #{col[:name]}#{key_mark}"
         end
         lines << "    }"

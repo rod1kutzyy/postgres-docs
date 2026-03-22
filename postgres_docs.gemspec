@@ -28,10 +28,9 @@ Gem::Specification.new do |spec|
   end
 
   spec.bindir = "exe"
-  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  spec.executables = ["postgres_docs"]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "pg", "~> 1.5"
   spec.add_dependency "thor", "~> 1.3"
-  
 end
