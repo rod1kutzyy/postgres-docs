@@ -24,6 +24,8 @@ module PostgresDocs
         exit 1   
     end
 
+    private 
+    
     def fetch_db(dsn)
       say "Connecting to database...", :cyan
       #logic of getting info from db
@@ -40,7 +42,6 @@ module PostgresDocs
       say "Generation error: #{e.message}", :red
       exit 1
     end
-
      
     def write_to_file(path,content) 
       File.write(options[:output], md_content)
