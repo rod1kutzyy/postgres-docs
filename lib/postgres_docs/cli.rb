@@ -42,7 +42,8 @@ module PostgresDocs
 
     def generate_data(scheme)
       say "Generating MD & Mermaid-scheme...", :cyan
-      # logic of generation
+      generator = PostgresDocs::Generator.new(scheme)
+      generator.generate
     rescue StandardError => e
       say "Generation error: #{e.message}", :red
       exit 1
