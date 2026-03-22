@@ -11,26 +11,30 @@ module PostgresDocs
       true
     end
 
-    desc "generate DSN", "Generate Markdown-documintation for PostgreSQL data-base"
+    desc "generate DSN", "Generate Markdown-documentation for PostgreSQL database"
     method_option :output,
                   type: :string,
                   aliases: "-o",
                   default: "database_docs.md",
                   desc: "Path for output file (example: docs/db.md)"
 
+    default_task :generate
+
     def generate(dsn)
-      # All blocks of generating
-    rescue StandardError => e
-      say "Failed: #{e.message}", :red
-      exit 1
+      scheme_data = fetch_db(dsn)
+      md_content = generate_data(scheme_data)
+      write_to_file(options[:output], md_content)
     end
 
     private
 
     def fetch_db(dsn)
       say "Connecting to database...", :cyan
-      # logic of getting info from db
-      say "Scheme was successfully extracted. Tables founded: #{}", :green
+      database = PostgresDocs::Database.new(dsn)
+      scheme = database.extract_schema
+
+      say "Scheme was successfully extracted. Tables founded: #{scheme.keys.size}", :green
+      scheme
     rescue StandardError => e
       say "Error while working with database. More info: #{e.message}", :red
       exit 1
@@ -45,8 +49,8 @@ module PostgresDocs
     end
 
     def write_to_file(path, content)
-      File.write(options[:output], md_content)
-      say "Documentation successfully saved into: #{options[:output]}", :green
+      File.write(path, content)
+      say "Documentation successfully saved into: #{path}", :green
     rescue StandardError => e
       say "Writing to file error: #{e.message}", :red
       exit 1
