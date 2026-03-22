@@ -30,7 +30,7 @@ module PostgresDocs
     end
 
     def build_mermaid_diagram # rubocop:disable Metrics/AbcSize
-      lines = ["Scheme of database (ER-diagramm)", "", "```mermaid", "erDiagram"]
+      lines = ["Scheme of database (ER-diagram)", "", "```mermaid", "erDiagram"]
       @schema.each do |table_name, data|
         data[:foreign_keys].each do |fk|
           lines << "    #{fk[:foreign_table]} ||--o{ #{table_name} : \"#{fk[:column]}\""
@@ -68,7 +68,7 @@ module PostgresDocs
         lines << "> #{data[:comment]}" if data[:comment] && !data[:comment].empty?
         lines << ""
 
-        lines << "| Имя колонки | Тип данных | Nullable | По умолчанию | Описание |"
+        lines << "| Name of column | Data type | Nullable | Default value | Description |"
         lines << "|---|---|:---:|---|---|"
 
         data[:columns].each do |col|
