@@ -6,3 +6,10 @@ Style/StringLiterals:
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
+
+Metrics/MethodLength:
+  CountAsOne: ['heredoc']
+  Max: 30
+
+Metrics/ClassLength:
+  Max: 150
