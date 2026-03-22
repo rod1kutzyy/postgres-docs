@@ -85,5 +85,11 @@ module PostgresDocs
       end
       tables_md.join("\n\n---\n\n")
     end
+
+    def escape_md_table(text)
+      return "" if text.nil? || text.to_s.strip.empty?
+
+      text.to_s.gsub("|", "\\|").gsub("\n", " ").strip
+    end
   end
 end
