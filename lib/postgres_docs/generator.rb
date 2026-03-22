@@ -50,5 +50,13 @@ module PostgresDocs
       lines << "```"
       lines.join("\n")
     end
+
+    def build_toc
+      lines = ["## Table of contents", ""]
+      @schema.keys.sort.each do |table_name|
+        lines << "* [#{table_name}](##{table_name})"
+      end
+      lines.join("\n")
+    end
   end
 end
