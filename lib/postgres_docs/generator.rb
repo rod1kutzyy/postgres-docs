@@ -58,5 +58,32 @@ module PostgresDocs
       end
       lines.join("\n")
     end
+
+    def build_table_details # rubocop:disable Metrics/AbcSize
+      tables_md = []
+
+      @schema.sort.each do |table_name, data|
+        lines = ["## #{table_name}"]
+
+        lines << "> #{data[:comment]}" if data[:comment] && !data[:comment].empty?
+        lines << ""
+
+        lines << "| Имя колонки | Тип данных | Nullable | По умолчанию | Описание |"
+        lines << "|---|---|:---:|---|---|"
+
+        data[:columns].each do |col|
+          name_display = col[:is_pk] ? "**#{col[:name]}** *(PK)*" : col[:name]
+          nullable_display = col[:nullable] ? "✔" : "⨉"
+
+          safe_default = escape_md_table(col[:default])
+          safe_comment = escape_md_table(col[:comment])
+
+          lines << "| #{name_display} | `#{col[:type]}` | #{nullable_display} | `#{safe_default}` | #{safe_comment} |"
+        end
+
+        tables_md << lines.join("\n")
+      end
+      tables_md.join("\n\n---\n\n")
+    end
   end
 end
