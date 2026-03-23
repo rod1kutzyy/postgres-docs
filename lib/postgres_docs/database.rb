@@ -5,10 +5,13 @@ require "pg"
 module PostgresDocs
   # Class for extracting tables info from database
   class Database
+    # Initializes the database extractor with a connection string.
     def initialize(dsn)
       @dsn = dsn
     end
 
+    # Establishes a connection to the database and orchestrates the schema
+    # extraction process.
     def extract_schema
       PG.connect(@dsn) do |conn|
         schema = initialize_tables(conn)
@@ -24,6 +27,7 @@ module PostgresDocs
 
     private
 
+    # Fetches all public tables and partitioned tables from the database.
     def initialize_tables(conn)
       schema = {}
 
@@ -48,6 +52,7 @@ module PostgresDocs
       schema
     end
 
+    # Modifies the schema hash in-place to attach column details for each table.
     def attach_columns!(conn, schema)
       query = <<-SQL
         SELECT
@@ -84,6 +89,7 @@ module PostgresDocs
       end
     end
 
+    # Modifies the schema hash in-place to flag columns that act as Primary Keys.
     def attach_primary_keys!(conn, schema)
       query = <<-SQL
         SELECT
@@ -108,6 +114,7 @@ module PostgresDocs
       end
     end
 
+    # Modifies the schema hash in-place to append Foreign Key relationships.
     def attach_foreign_keys!(conn, schema)
       query = <<-SQL
         SELECT

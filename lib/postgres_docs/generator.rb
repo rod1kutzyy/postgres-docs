@@ -3,10 +3,13 @@
 module PostgresDocs
   # Main genrator
   class Generator
+    # Initializes the documentation generator.
     def initialize(schema)
       @schema = schema
     end
 
+    # Orchestrates the generation of the Markdown document by combining
+    # the header, ER-diagram, table of contents, and table details.
     def generate
       document_block = [
         build_header,
@@ -15,11 +18,12 @@ module PostgresDocs
         build_table_details
       ]
 
-      document_block.join("\n\n") + "\n"
+      "#{document_block.join("\n\n")}\n"
     end
 
     private
 
+    # Builds the primary header and general statistics of the documentation.
     def build_header
       <<~MARKDOWN
         # Documentation PostreSQL database
@@ -29,6 +33,7 @@ module PostgresDocs
       MARKDOWN
     end
 
+    # Constructs an ER diagram using Mermaid.js syntax.
     def build_mermaid_diagram # rubocop:disable Metrics/AbcSize
       lines = ["## Scheme of database (ER-diagram)", "", "```mermaid", "erDiagram"]
       @schema.each do |table_name, data|
@@ -51,6 +56,7 @@ module PostgresDocs
       lines.join("\n")
     end
 
+    # Creates a Markdown list of internal anchor links for quick navigation.
     def build_toc
       lines = ["## Table of contents", ""]
       @schema.keys.sort.each do |table_name|
@@ -59,6 +65,8 @@ module PostgresDocs
       lines.join("\n")
     end
 
+    # Iterates through the schema to build detailed Markdown tables for each
+    # database table, detailing column names, types, nullability, and descriptions.
     def build_table_details # rubocop:disable Metrics/AbcSize
       tables_md = []
 
@@ -86,6 +94,7 @@ module PostgresDocs
       tables_md.join("\n\n---\n\n")
     end
 
+    # Sanitizes text to safely fit inside a Markdown table cell.
     def escape_md_table(text)
       return "" if text.nil? || text.to_s.strip.empty?
 

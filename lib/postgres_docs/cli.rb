@@ -7,6 +7,7 @@ require_relative "generator"
 module PostgresDocs
   # Class for CLI API
   class CLI < Thor
+    # Ensures that Thor returns a non-zero exit status code upon failure.
     def self.exit_on_failure?
       true
     end
@@ -20,6 +21,8 @@ module PostgresDocs
 
     default_task :generate
 
+    # Main entry point for the CLI. Orchestrates the entire documentation
+    # generation process.
     def generate(dsn)
       scheme_data = fetch_db(dsn)
       md_content = generate_data(scheme_data)
@@ -28,6 +31,7 @@ module PostgresDocs
 
     private
 
+    # Connects to the database and extracts its internal schema structure.
     def fetch_db(dsn)
       say "Connecting to database...", :cyan
       database = PostgresDocs::Database.new(dsn)
@@ -40,6 +44,7 @@ module PostgresDocs
       exit 1
     end
 
+    # Transforms the raw database schema into formatted Markdown text.
     def generate_data(scheme)
       say "Generating MD & Mermaid-scheme...", :cyan
       generator = PostgresDocs::Generator.new(scheme)
@@ -49,6 +54,7 @@ module PostgresDocs
       exit 1
     end
 
+    # Writes the generated documentation payload to the specified file path.
     def write_to_file(path, content)
       File.write(path, content)
       say "Documentation successfully saved into: #{path}", :green
