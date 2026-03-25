@@ -16,3 +16,8 @@ Metrics/ClassLength:
 
 Metrics/BlockLength:
   Max: 100
+
+Layout/LineLength:
+  Max: 130
+  Exclude:
+    - 'spec/**/*'
