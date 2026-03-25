@@ -54,6 +54,20 @@ cd postgres-docs
 bundle install
 ```
 
+## Running tests
+
+Run the test suite with RSpec:
+
+```bash
+bundle exec rspec
+```
+
+Alternative via rake task:
+
+```bash
+bundle exec rake spec
+```
+
 ## Quick Start (CLI)
 
 Generate documentation to the default file (`database_docs.md`):
@@ -135,7 +149,7 @@ puts "Documentation generated: docs/database.md"
 #### Documentation PostreSQL database
 
 > Generated automaticly by gem `postgres_docs`.
-> Count of tables: **2**
+> Count of tables: **6**
 
 ## Scheme of database (ER-diagram)
 
