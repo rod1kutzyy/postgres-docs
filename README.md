@@ -209,6 +209,11 @@ erDiagram
         timestamp_with_time_zone created_at
     }
 ```
+## Viewing the Diagram
+The generated documentation includes a **Mermaid.js** Entity-Relationship diagram. 
+
+* **GitHub/GitLab:** These platforms render the diagram automatically in your browser.
+* **VS Code:** To see the diagram locally, you need the [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid) extension. Otherwise, it will only appear as a code block.
 
 ## Error Handling
 
